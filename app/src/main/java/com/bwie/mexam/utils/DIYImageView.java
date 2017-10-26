@@ -26,11 +26,11 @@ import com.bwie.mexam.R;
  */
 public class DIYImageView extends ImageView {
 
-    private final int DEFAULT_RADIUS = 10;
+    private final int DEFAULT_RADIUS=10;
 
     private BitmapShader mBitmapShader;
     private Paint mBitmapPaint = new Paint();
-    private RectF mRoundRect = new RectF();
+    private RectF mRoundRect=new RectF();
     private int x_radius;
     private int y_radius;
 
@@ -49,14 +49,15 @@ public class DIYImageView extends ImageView {
         initObjectAttribute();
 
         final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RoundImageView, defStyleAttr, 0);
-        x_radius = a.getDimensionPixelSize(R.styleable.RoundImageView_x_radius, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_RADIUS, getResources().getDisplayMetrics()));
-        y_radius = a.getDimensionPixelSize(R.styleable.RoundImageView_y_radius, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_RADIUS, getResources().getDisplayMetrics()));
+        x_radius=a.getDimensionPixelSize(R.styleable.RoundImageView_x_radius, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,DEFAULT_RADIUS, getResources().getDisplayMetrics()));
+        y_radius=a.getDimensionPixelSize(R.styleable.RoundImageView_y_radius, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,DEFAULT_RADIUS, getResources().getDisplayMetrics()));
         a.recycle();
 
 
     }
 
-    private void initObjectAttribute() {
+    private void initObjectAttribute()
+    {
         mBitmapPaint.setAntiAlias(true);
 //		if(getScaleType() != ScaleType.CENTER_CROP)
 //		{
@@ -82,18 +83,22 @@ public class DIYImageView extends ImageView {
         createBitmapShader();
     }
 
-    private void createBitmapShader() {
+    private void createBitmapShader()
+    {
         mBitmapShader = null;
         Drawable mDrawable = getDrawable();
-        if (null == mDrawable) {
+        if (null == mDrawable)
+        {
             return;
         }
 
-        if (mDrawable instanceof BitmapDrawable) {
+        if(mDrawable instanceof BitmapDrawable)
+        {
             BitmapDrawable bd = (BitmapDrawable) mDrawable;
             Bitmap bitmap = bd.getBitmap();
             mBitmapShader = new BitmapShader(bitmap, TileMode.CLAMP, TileMode.CLAMP);
-        } else //if Drawable instanceof NinePathDrawable ，the code below is bad , because a view reference two bitmap ( one in NinePath , other is here)
+        }
+        else //if Drawable instanceof NinePathDrawable ，the code below is bad , because a view reference two bitmap ( one in NinePath , other is here)
         {
             int w = mDrawable.getIntrinsicWidth();
             int h = mDrawable.getIntrinsicHeight();
@@ -109,22 +114,24 @@ public class DIYImageView extends ImageView {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        mRoundRect.set(0, 0, getMeasuredWidth(), getMeasuredHeight());
+        mRoundRect.set(0,0,getMeasuredWidth(),getMeasuredHeight());
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
 
         Drawable mDrawable = getDrawable();
-        if (null == mDrawable || null == mBitmapShader) {
+        if (null == mDrawable || null == mBitmapShader)
+        {
             return;
         }
-        Matrix mDrawMatrix = getImageMatrix();
-        if (null == mDrawMatrix) {
-            mDrawMatrix = new Matrix();
+        Matrix mDrawMatrix= getImageMatrix();
+        if(null == mDrawMatrix)
+        {
+            mDrawMatrix =new Matrix();
         }
         mBitmapShader.setLocalMatrix(mDrawMatrix);
         mBitmapPaint.setShader(mBitmapShader);
-        canvas.drawRoundRect(mRoundRect, x_radius, y_radius, mBitmapPaint);
+        canvas.drawRoundRect(mRoundRect, x_radius, y_radius,mBitmapPaint);
     }
 }
